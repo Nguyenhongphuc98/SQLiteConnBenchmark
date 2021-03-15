@@ -1,36 +1,23 @@
 
 // args: numLoop, numCons, logData
 
-var fs = require("fs");
-var pidusage = require('pidusage')
+const pidusage = require('pidusage')
 const { ConnectionPool } = require('../ConnectionPool');
 
-var args = process.argv.slice(2);
-// const str = args[0] ?? 0;
+const args = process.argv.slice(2);
 const numLoop = args[0] ?? 1;
 const numCons = args[1] ?? 1;
 const logData = args[2] ?? 1;
 
 console.log(`>>> Start run ${numLoop} times with num conn: ${numCons}`);
 
+// let numResolve = 0;
+// let numFailure = 0;
 
-let numResolve = 0;
-let numFailure = 0;
+// Data to insert
+let ranges = require('./arrNumberRange')(1000000);
 
-
-// Load data into arrays ==========================
-var text = fs.readFileSync(`data/genIRange.txt`).toString('utf-8');
-// console.log(text)
-var textByLine = text.split("\n");
-let rows = []
-
-for (let i = 0; i < textByLine.length; i++) {
-    const row = textByLine[i].split(".");
-    rows.push({
-        start: row[0],
-        end: row[1]
-    })
-}
+// console.log(ranges);
 
 const pool = new ConnectionPool('db.sqlite',
     {
@@ -42,7 +29,8 @@ const pool = new ConnectionPool('db.sqlite',
     }
 );
 
-// start to insert
+// start to insert ======================
+// ======================================
 for (let i = 0; i < numLoop; i++) {
     // This test does querie on a 1.000.000 entry table without an index, 
     // thus requiring a full table scan
@@ -50,15 +38,15 @@ for (let i = 0; i < numLoop; i++) {
 
     pool.acquire()
         .then(conn => {
-            conn.all(sql, [rows[i].start, rows[i].end], (err, rows) => {
+            conn.all(sql, [ranges[i].start, ranges[i].end], (err, rows) => {
                 if (err) {
                     console.log(err);
-                    numFailure += 1;
+                    // numFailure += 1;
                 } else {
                     // if (logData) {
                     //     console.log(rows);
                     // }
-                    numResolve += 1;
+                    // numResolve += 1;
                 }
 
                 pool.release(conn);
@@ -69,7 +57,9 @@ for (let i = 0; i < numLoop; i++) {
 
 pool.onFinish = () => {
     pidusage(process.pid, function (err, stats) {
-        console.log(stats.cpu +'-' + stats.memory / 1024 / 1024)
+        //console.log(stats.cpu +'-' + stats.memory / 1024 / 1024)
+        console.log(stats.cpu);
+        console.log(stats.memory / 1024 / 1024);
     })
 
     // console.log(`Num resolve: ${numResolve}/${numLoop}`);

@@ -4,7 +4,7 @@
 const pidusage = require('pidusage');
 const { ConnectionPool } = require('../ConnectionPool');
 
-var args = process.argv.slice(2);
+const args = process.argv.slice(2);
 const numLoop = args[0] ?? 1;
 const numCons = args[1] ?? 1;
 const readPercent = args[2] ?? 0.5;
@@ -17,6 +17,9 @@ const pool = new ConnectionPool('db.sqlite', { max: numCons });
 // Load data
 const {rows} = require('./arrNumberString');
 const {ranges} = require('./arrNumberRange');
+
+// console.log(rows);
+// console.log(ranges);
 
 for (let i = 0; i < numLoop; i++) {
     const ran = Math.random();

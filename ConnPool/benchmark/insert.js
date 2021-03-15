@@ -1,10 +1,7 @@
 
 // args: numRows, numCons
 
-const fs = require("fs");
-const pidusage = require('pidusage');
 const { ConnectionPool } = require('../ConnectionPool');
-
 
 var args = process.argv.slice(2);
 const numRows = args[0];
@@ -12,26 +9,16 @@ const numCons = args[1];
 
 console.log(`>>> Start run ${numRows} times with num conn: ${numCons}`);
 
-let numResolve = 0;
-let numFailure = 0;
+// let numResolve = 0;
+// let numFailure = 0;
 
-// Load data into arrays ==========================
-var text = fs.readFileSync(`data/${numRows}.txt`).toString('utf-8');
-// console.log(text)
-var textByLine = text.split("\n");
-let rows = []
+// Data to insert
+let rows = require('./arrNumberString')(numRows);
 
-for (let i = 0; i < textByLine.length; i++) {
-    const row = textByLine[i].split(".");
-    rows.push({
-        number: row[0],
-        text: row[1]
-    })
-}
+// console.log(rows);
 
 // start to insert ========================== 
-
-
+// ==========================================
 const pool = new ConnectionPool('db.sqlite',
     {
         max: numCons,
@@ -76,7 +63,9 @@ pool.onFinish = () => {
 
     pidusage(process.pid, function (err, stats) {
         // console.log(stats)
-        console.log(stats.cpu +'-' + stats.memory / 1024 / 1024)
+        //console.log(stats.cpu +'-' + stats.memory / 1024 / 1024)
+        console.log(stats.cpu);
+        console.log(stats.memory / 1024 / 1024);
     })
 
     // console.log(`Num resolve: ${numResolve}/${numRows}`);

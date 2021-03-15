@@ -1,15 +1,18 @@
 const fs = require('fs');
 const converter = require('number-to-words');
 
+var args = process.argv.slice(2);
+const numRows = args[0];
+
 // Data which will need to add in a file. 
 let data = '';
 
-for (let i = 1; i <= 1000000; i++) {
+for (let i = 1; i <= numRows; i++) {
     data += `${i}.${converter.toWords(i)}\n`;
 }
 
 // Write data in 'number.txt' . 
-fs.writeFile('1000000.txt', data, (error) => {
+fs.writeFile(`data/${numRows}.txt`, data, (error) => {
 
     // In case of a error throw err exception. 
     if (error) throw err;

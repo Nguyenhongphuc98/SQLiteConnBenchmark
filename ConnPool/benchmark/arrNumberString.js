@@ -2,20 +2,17 @@
 
 var fs = require("fs");
 
-const numRows = 1000000;
+module.exports = function (numRows) {
+    var text = fs.readFileSync(`data/${numRows}.txt`).toString('utf-8');
+    var textByLine = text.split("\n");
+    let rows = []
 
-// Load data into arrays ==========================
-var text = fs.readFileSync(`data/${numRows}.txt`).toString('utf-8');
-// console.log(text)
-var textByLine = text.split("\n");
-let rows = []
-
-for (let i = 0; i < textByLine.length; i++) {
-    const row = textByLine[i].split(".");
-    rows.push({
-        number: row[0],
-        text: row[1]
-    })
-}
-
-module.exports = {rows};
+    for (let i = 0; i < textByLine.length; i++) {
+        const row = textByLine[i].split(".");
+        rows.push({
+            number: row[0],
+            text: row[1]
+        })
+    }
+    return rows;
+};
