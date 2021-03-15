@@ -1,0 +1,217 @@
+"relation": "node benchmark/relation.js",
+"insert": "node benchmark/insert.js",
+"select": "node benchmark/select.js",
+"mix": "node mix.js",
+
+"insert-1000-1": "npm run insert 1000 1",
+"insert-1000-10": "npm run insert 1000 10",
+"insert-1000-20": "npm run insert 1000 20",
+"insert-1000-100": "npm run insert 1000 100",
+
+"insert-10000-1": "npm run insert 10000 1",
+"insert-10000-10": "npm run insert 10000 10",
+"insert-10000-20": "npm run insert 10000 20",
+"insert-10000-100": "npm run insert 10000 100",
+
+"insert-100000-1": "npm run insert 100000 1",
+"insert-100000-10": "npm run insert 100000 10",
+"insert-100000-20": "npm run insert 100000 20",
+"insert-100000-100": "npm run insert 100000 100",
+
+"insert-1000000-1": "npm run insert 1000000 1",
+"insert-1000000-10": "npm run insert 1000000 10",
+"insert-1000000-20": "npm run insert 1000000 20",
+"insert-1000000-100": "npm run insert 1000000 100",
+
+"select-1000-1": "npm run select 1000 1",
+"select-1000-10": "npm run select 1000 10",
+"select-1000-20": "npm run select 1000 20",
+"select-1000-100": "npm run select 1000 100",
+
+"select-10000-1": "npm run select 10000 1",
+"select-10000-10": "npm run select 10000 10",
+"select-10000-20": "npm run select 10000 20",
+"select-10000-100": "npm run select 10000 100",
+
+"select-100000-1": "npm run select 100000 1",
+"select-100000-10": "npm run select 100000 10",
+"select-100000-20": "npm run select 100000 20",
+"select-100000-100": "npm run select 100000 100",
+
+"mix-1000-1-5": "npm run mix 1000 1 0.5",
+"mix-1000-10-5": "npm run mix 1000 10 0.5",
+"mix-1000-20-5": "npm run mix 1000 20 0.5",
+"mix-1000-100-5": "npm run mix 1000 100 0.5",
+
+"mix-10000-1-5": "npm run mix 10000 1 0.5",
+"mix-10000-10-5": "npm run mix 10000 10 0.5",
+"mix-10000-20-5": "npm run mix 10000 20 0.5",
+"mix-10000-100-5": "npm run mix 10000 100 0.5",
+
+"mix-1000-1-95": "npm run mix 1000 1 0.95",
+"mix-1000-10-95": "npm run mix 1000 10 0.95",
+"mix-1000-20-95": "npm run mix 1000 20 0.95",
+"mix-1000-100-95": "npm run mix 1000 100 0.95",
+
+"mix-10000-1-95": "npm run mix 10000 1 0.95",
+"mix-10000-10-95": "npm run mix 10000 10 0.95",
+"mix-10000-20-95": "npm run mix 10000 20 0.95",
+"mix-10000-100-95": "npm run mix 10000 100 0.95",
+
+npm run relation drop &&
+ npm run relation create &&
+ npm run insert-1000-1 &&
+ npm run clear &&
+ npm run insert-1000-1 &&
+ npm run clear &&
+ npm run insert-1000-1 &&
+ npm run clear &&
+ npm run insert-1000-10 &&
+ npm run clear &&
+ npm run insert-1000-10 &&
+ npm run clear &&
+ npm run insert-1000-10 &&
+ npm run clear &&
+ npm run insert-1000-20 &&
+ npm run clear &&
+ npm run insert-1000-20 &&
+ npm run clear &&
+ npm run insert-1000-20 &&
+ npm run clear &&
+ npm run insert-1000-100 &&
+ npm run clear &&
+ npm run insert-1000-100 &&
+ npm run clear &&
+ npm run insert-1000-100 &&
+ npm run clear &&
+
+ npm run insert-10000-1 &&
+ npm run clear &&
+ npm run insert-10000-1 &&
+ npm run clear &&
+ npm run insert-10000-1 &&
+ npm run clear &&
+ npm run insert-10000-10 &&
+ npm run clear &&
+ npm run insert-10000-10 &&
+ npm run clear &&
+ npm run insert-10000-10 &&
+ npm run clear &&
+ npm run insert-10000-20 &&
+ npm run clear &&
+ npm run insert-10000-20 &&
+ npm run clear &&
+ npm run insert-10000-20 &&
+ npm run clear &&
+ npm run insert-10000-100 &&
+ npm run clear &&
+ npm run insert-10000-100 &&
+ npm run clear &&
+ npm run insert-10000-100 &&
+ npm run clear &&
+
+ npm run insert-100000-1 &&
+ npm run clear &&
+ npm run insert-100000-1 &&
+ npm run clear &&
+ npm run insert-100000-1 &&
+ npm run clear &&
+ npm run insert-100000-10 &&
+ npm run clear &&
+ npm run insert-100000-10 &&
+ npm run clear &&
+ npm run insert-100000-10 &&
+ npm run clear &&
+ npm run insert-100000-20 &&
+ npm run clear &&
+ npm run insert-100000-20 &&
+ npm run clear &&
+ npm run insert-100000-20 &&
+ npm run clear &&
+ npm run insert-100000-100 &&
+ npm run clear &&
+ npm run insert-100000-100 &&
+ npm run clear &&
+ npm run insert-100000-100 &&
+ npm run clear &&
+
+ npm run insert-1000000-1 &&
+ npm run clear &&
+ npm run insert-1000000-1 &&
+ npm run clear &&
+ npm run insert-1000000-1 &&
+ npm run clear &&
+ npm run insert-1000000-10 &&
+ npm run clear &&
+ npm run insert-1000000-10 &&
+ npm run clear &&
+ npm run insert-1000000-10 &&
+ npm run clear &&
+ npm run insert-1000000-20 &&
+ npm run clear &&
+ npm run insert-1000000-20 &&
+ npm run clear &&
+ npm run insert-1000000-20 &&
+ npm run clear &&
+ npm run insert-1000000-100 &&
+ npm run clear &&
+ npm run insert-1000000-100 &&
+ npm run clear &&
+ npm run insert-1000000-100 &&
+ 
+ // select in table 1tr record
+ npm run select-1000-1 &&
+ npm run select-1000-1 &&
+ npm run select-1000-1 &&
+ npm run select-1000-10 &&
+ npm run select-1000-10 &&
+ npm run select-1000-10 &&
+ npm run select-1000-20 &&
+ npm run select-1000-20 &&
+ npm run select-1000-20 &&
+ npm run select-1000-100 &&
+ npm run select-1000-100 &&
+ npm run select-1000-100 &&
+
+ npm run select-10000-1 &&
+ npm run select-10000-1 &&
+ npm run select-10000-1 &&
+ npm run select-10000-10 &&
+ npm run select-10000-10 &&
+ npm run select-10000-10 &&
+ npm run select-10000-20 &&
+ npm run select-10000-20 &&
+ npm run select-10000-20 &&
+ npm run select-10000-100 &&
+ npm run select-10000-100 &&
+ npm run select-10000-100 &&
+
+ npm run select-100000-1 &&
+ npm run select-100000-1 &&
+ npm run select-100000-1 &&
+ npm run select-100000-10 &&
+ npm run select-100000-10 &&
+ npm run select-100000-10 &&
+ npm run select-100000-20 &&
+ npm run select-100000-20 &&
+ npm run select-100000-20 &&
+ npm run select-100000-100 &&
+ npm run select-100000-100 &&
+ npm run select-100000-100 &&
+
+ npm run mix-1000-1-5 &&
+ npm run mix-1000-1-5 &&
+ npm run mix-1000-1-5 &&
+
+ npm run mix-1000-1-95 &&
+ npm run mix-1000-1-95 &&
+ npm run mix-1000-1-95 &&
+
+ npm run mix-10000-1-5 &&
+ npm run mix-10000-1-5 &&
+ npm run mix-10000-1-5 &&
+
+ npm run mix-10000-1-95 &&
+ npm run mix-10000-1-95 &&
+ npm run mix-10000-1-95 &&
+ 

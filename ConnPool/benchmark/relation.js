@@ -48,7 +48,7 @@ function init() {
         .then(conn => {
             run(conn, sql);
             if (index === 'index') {
-                const indexSql = 'CREATE INDEX idx_des ON chats (description)';
+                const indexSql = 'CREATE INDEX idx_des ON chats (numOfMess)';
                 run(conn, indexSql);
             }
         })
