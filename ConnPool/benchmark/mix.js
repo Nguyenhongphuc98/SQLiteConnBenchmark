@@ -19,7 +19,15 @@ const message = `>>> Start mix ${numLoop} times with num conn: ${numCons}, read 
 console.log(message);
 log.writeHeader(message);
 
-const pool = new ConnectionPool('db.sqlite', { max: numCons });
+const pool = new ConnectionPool('db.sqlite',
+    {
+        max: numCons,
+        acquireTimeoutMillis: 5000000
+    },
+    {
+        busyTimeout: 100000
+    }
+);
 
 for (let i = 0; i < numLoop; i++) {
     const ran = Math.random();

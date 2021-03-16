@@ -27,7 +27,7 @@ const pool = new ConnectionPool('db.sqlite',
         acquireTimeoutMillis: 5000000
     },
     {
-        busyTimeout: 1000
+        busyTimeout: 100000
     }
 );
 

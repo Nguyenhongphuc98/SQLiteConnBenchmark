@@ -22,10 +22,10 @@ log.writeHeader(message);
 const pool = new ConnectionPool('db.sqlite',
     {
         max: numCons,
-        acquireTimeoutMillis: 180000
+        acquireTimeoutMillis: 5000000
     },
     {
-        busyTimeout: 7000
+        busyTimeout: 100000
     }
 );
 
