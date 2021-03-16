@@ -2,22 +2,22 @@
 // args: numRows, numCons
 
 const { ConnectionPool } = require('../ConnectionPool');
+const log = require('./writeLog');
 
 var args = process.argv.slice(2);
 const numRows = args[0];
 const numCons = args[1];
 
-console.log(`>>> Start run ${numRows} times with num conn: ${numCons}`);
-
-// let numResolve = 0;
-// let numFailure = 0;
-
 // Data to insert
 let rows = require('./arrNumberString')(numRows);
 
-// console.log(rows);
+// Log info
+const message = `>>> Start insert ${numRows} records with num conn: ${numCons}`;
+console.log(message);
+log.writeHeader(message);
 
-// start to insert ========================== 
+
+// Start to insert ========================== 
 // ==========================================
 const pool = new ConnectionPool('db.sqlite',
     {
@@ -38,10 +38,10 @@ for (let i = 0; i < numRows; i++) {
         .then(conn => {
             conn.run(sql, ['name' + i, rows[i].number, rows[i].text], (err) => {
                 if (err) {
-                    numFailure += 1;
+                    //numFailure += 1;
                     console.log(err);
                 } else {
-                    numResolve += 1;
+                    //numResolve += 1;
                 }
 
                 pool.release(conn);
@@ -51,7 +51,7 @@ for (let i = 0; i < numRows; i++) {
 
 // var cpu = osu.cpu;
 // var mem = osu.mem;
-pool.onFinish = () => {
+pool.onFinish = (time) => {
     // cpu.usage()
     //     .then(info => {
     //         console.log(`CPU: ${info} %`);
@@ -61,14 +61,16 @@ pool.onFinish = () => {
     //         console.log(`MEM: ${info.usedMemMb} MB`);
     //     })
 
-    pidusage(process.pid, function (err, stats) {
-        // console.log(stats)
-        //console.log(stats.cpu +'-' + stats.memory / 1024 / 1024)
-        console.log(stats.cpu);
-        console.log(stats.memory / 1024 / 1024);
-    })
+    // pidusage(process.pid, function (err, stats) {
+    //     // console.log(stats)
+    //     //console.log(stats.cpu +'-' + stats.memory / 1024 / 1024)
+    //     console.log(stats.cpu);
+    //     console.log(stats.memory / 1024 / 1024);
+    // })
 
     // console.log(`Num resolve: ${numResolve}/${numRows}`);
     // console.log(`Num failure: ${numFailure}/${numRows}`);
+
+    log.writeLog(time);
 }
 

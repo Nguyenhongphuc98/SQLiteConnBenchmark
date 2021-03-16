@@ -1,21 +1,23 @@
 
 // args: numLoop, numCons, logData
 
-const pidusage = require('pidusage')
 const { ConnectionPool } = require('../ConnectionPool');
+const log = require('./writeLog');
 
 const args = process.argv.slice(2);
 const numLoop = args[0] ?? 1;
 const numCons = args[1] ?? 1;
 const logData = args[2] ?? 1;
 
-console.log(`>>> Start run ${numLoop} times with num conn: ${numCons}`);
+const message = `>>> Start select ${numLoop} times with num conn: ${numCons}`;
+console.log(message);
+log.writeHeader(message);
 
 // let numResolve = 0;
 // let numFailure = 0;
 
-// Data to insert
-let ranges = require('./arrNumberRange')(1000000);
+// Data to compare
+let ranges = require('./arrNumberRange');
 
 // console.log(ranges);
 
@@ -55,12 +57,8 @@ for (let i = 0; i < numLoop; i++) {
 }
 
 
-pool.onFinish = () => {
-    pidusage(process.pid, function (err, stats) {
-        //console.log(stats.cpu +'-' + stats.memory / 1024 / 1024)
-        console.log(stats.cpu);
-        console.log(stats.memory / 1024 / 1024);
-    })
+pool.onFinish = (time) => {
+    log.writeLog(time);
 
     // console.log(`Num resolve: ${numResolve}/${numLoop}`);
     // console.log(`Num failure: ${numFailure}/${numLoop}`);

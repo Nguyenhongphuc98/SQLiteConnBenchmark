@@ -1,6 +1,6 @@
 var fs = require("fs");
 
-module.exports = function (numRows) {
+module.exports = function () {
     var text = fs.readFileSync(`data/genIRange.txt`).toString('utf-8');
     var textByLine = text.split("\n");
     let ranges = []

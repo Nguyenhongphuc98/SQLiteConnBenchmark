@@ -1,8 +1,8 @@
 
 // args: numLoop, numCons, readPercentm, logData
 
-const pidusage = require('pidusage');
 const { ConnectionPool } = require('../ConnectionPool');
+const log = require('./writeLog');
 
 const args = process.argv.slice(2);
 const numLoop = args[0] ?? 1;
@@ -10,16 +10,16 @@ const numCons = args[1] ?? 1;
 const readPercent = args[2] ?? 0.5;
 // const logData = args[3] ?? 0;
 
-console.log(`>>> Start run ${numLoop} times with num conn: ${numCons}, read percent: ${readPercent}`);
-
-const pool = new ConnectionPool('db.sqlite', { max: numCons });
-
 // Load data
-const {rows} = require('./arrNumberString');
+const {rows} = require('./arrNumberString')(numLoop);
 const {ranges} = require('./arrNumberRange');
 
-// console.log(rows);
-// console.log(ranges);
+// Log info
+const message = `>>> Start mix ${numLoop} times with num conn: ${numCons}, read percent: ${readPercent}`;
+console.log(message);
+log.writeHeader(message);
+
+const pool = new ConnectionPool('db.sqlite', { max: numCons });
 
 for (let i = 0; i < numLoop; i++) {
     const ran = Math.random();
@@ -65,11 +65,7 @@ function run(conn, sql, params = []) {
     });
 }
 
-pool.onFinish = () => {
+pool.onFinish = (time) => {
 
-    pidusage(process.pid, function (err, stats) {
-        // console.log(stats)
-        console.log(stats.cpu);
-        console.log(stats.memory / 1024 / 1024);
-    })
+    log.writeLog(time);
 }

@@ -1,6 +1,7 @@
 const EventEmitter = require('events');
 const genericPool = require('generic-pool');
 const sqlite3 = require('sqlite3');
+const { performance } = require('perf_hooks');
 
 const CommandType = {
     ALL: 'all',
@@ -24,6 +25,9 @@ class ConnectionPool extends EventEmitter {
 
         this.totalWork = 0;
         this.numProcessed = 0;
+
+        this.timeStart = 0;
+        // this.timeEnd = 0;
 
         // Setup config pool infos
         Object.assign(this,
@@ -103,7 +107,7 @@ class ConnectionPool extends EventEmitter {
 
                 return resolve(connection);
             }
-            
+
             if (sqliteOpts.openMode !== null) {
                 connection = new sqlite3.Database(sqliteOpts.fileName, sqliteOpts.openMode, callback);
             } else {
@@ -120,7 +124,7 @@ class ConnectionPool extends EventEmitter {
                 }
                 return resolve();
             }
-            
+
             connection.close(callback);
         });
     }
@@ -128,8 +132,9 @@ class ConnectionPool extends EventEmitter {
     release(connection) {
         this.numProcessed += 1;
         if (this.numProcessed === this.totalWork) {
-            console.timeEnd('pool');
-            this.onFinish();
+            //console.timeEnd('pool');
+            this.onFinish(performance.now() - this.timeStart);
+            this.timeStart = 0;
         }
         return this._pool.release(connection);
     }
@@ -145,10 +150,11 @@ class ConnectionPool extends EventEmitter {
 
     acquire() {
         if (this.totalWork === 0) {
-            console.time('pool');
+            //console.time('pool');
+            this.timeStart = performance.now();
         }
         this.totalWork += 1;
-        
+
         return this._pool.acquire();
     }
 }
