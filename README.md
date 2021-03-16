@@ -27,6 +27,6 @@ Flowing there steps:
 - npm install
 - node data/gentext.js 1000
 - node data/gentext.js 10000
-- node data/gentext.js 10000
-- node data/gentext.js 10000
+- node data/gentext.js 100000
+- node data/gentext.js 1000000
 - npm run benchmark
